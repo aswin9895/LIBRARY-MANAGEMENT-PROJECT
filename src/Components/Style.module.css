@@ -1,0 +1,14 @@
+/* landing */
+.bg{
+    background-image: url("https://img.freepik.com/free-photo/modern-bookstore-showcasing-rows-vibrant-books_60438-3565.jpg?t=st=1731223279~exp=1731226879~hmac=b04827ae5eabf4a3d5bc890182b1696abe23a215b81da1301742a773396f44cc&w=1380");
+}
+.loginbgclr{
+    background-color: rgba(16, 15, 15, 0.764);
+}
+.headerheading{
+    font-family: "Jersey 15", sans-serif;
+}
+.tableresponsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
