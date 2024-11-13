@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router'
 import './App.css'
-import Landing from './Pages/Landing'
+import LandingPage from './Pages/LandingPage'
 import Auth from './Pages/Auth'
 import AllBooks from './Pages/AllBooks'
 import RecommendBooks from './Pages/User/RecommendBooks'
@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Landing />} />
+        <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<Auth />} />
         <Route path='/register' element={<Auth insideRegister={true} />} />
         <Route path='/allbooks' element={<AllBooks />} />

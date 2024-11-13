@@ -1,4 +1,9 @@
 /* landing */
+.bglanding{
+    background-image: url('https://img.freepik.com/free-photo/still-life-books-versus-technology_23-2150062868.jpg?uid=R118424786&ga=GA1.1.2041598839.1720431422&semt=ais_hybrid');
+    background-attachment: fixed;
+    background-size: cover;
+}
 .bg{
     background-image: url("https://img.freepik.com/free-photo/modern-bookstore-showcasing-rows-vibrant-books_60438-3565.jpg?t=st=1731223279~exp=1731226879~hmac=b04827ae5eabf4a3d5bc890182b1696abe23a215b81da1301742a773396f44cc&w=1380");
 }
