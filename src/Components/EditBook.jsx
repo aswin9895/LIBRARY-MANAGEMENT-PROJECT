@@ -1,12 +1,49 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import booklogo from '../assets/booklogo.png'
+import { useNavigate } from 'react-router';
+import { deleteBookAPI } from '../Services/allAPI';
+import { bookRemovedResponseContext } from '../ContextAPI/ResponseAPI';
 
-const EditBook = () => {
-
+const EditBook = ({ allBooks }) => {
+const {bookRemovedResponse, setBookRemoveResponse}=useContext(bookRemovedResponseContext)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const navigate = useNavigate()
+    useEffect(() => {
+        console.log(allBooks);
+
+    }, [])
+
+    const removeBook = async (id) => {
+        const token = sessionStorage.getItem("token")
+        if (token) {
+            const reqHeader={
+                "Authorization":`Bearer ${token}`
+            }
+            const admin = JSON.parse(sessionStorage.getItem("users"))
+            if (admin.role == "admin") {
+                try {
+                    const removeBook=await deleteBookAPI(id,reqHeader)
+                    if (removeBook.status==200) {
+                        // bookremove response 
+                        alert("Book Removed Successfully!!!")
+                        setBookRemoveResponse(removeBook)
+                    }
+                } catch (error) {
+                    
+                }
+            } else {
+                navigate('/login')
+            }
+
+
+        } else {
+            alert("Token missing... Please login!!!")
+        }
+    }
+
 
     return (
         <>
@@ -47,7 +84,7 @@ const EditBook = () => {
                     <Button className='fw-bolder text-light' variant="info">Submit</Button>
                 </Modal.Footer>
             </Modal>
-            <button style={{ border: "solid", borderWidth: "4px" }} className='px-2 py-1 rounded text-center text-dark bg-danger ms-2'><i class="fa-solid fa-trash"></i></button>
+            <button onClick={() => removeBook(allBooks?._id)} style={{ border: "solid", borderWidth: "4px" }} className='px-2 py-1 rounded text-center text-dark bg-danger ms-2'><i class="fa-solid fa-trash"></i></button>
         </>
     )
 }

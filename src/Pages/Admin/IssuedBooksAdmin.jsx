@@ -2,17 +2,17 @@ import React from 'react'
 import Header from '../../Components/Header'
 import mystyle from '../../Components/Style.module.css'
 import Footer from '../../Components/Footer'
+import SearchBook from '../../Components/SearchBook'
 
 const IssuedBooks = () => {
   return (
     <div>
-        <Header AdminHeader={true}/>
-        <div style={{ paddingTop: "170px", backgroundColor: "black", minHeight: "100vh" }}>
+      <Header AdminHeader={true} />
+      <div style={{ paddingTop: "170px", backgroundColor: "black", minHeight: "100vh" }}>
         <h1 style={{ backgroundColor: "#3D3D4A", border: "none", borderRadius: "10px" }} className='container d-flex justify-content-center text-light text-center py-1 w-75 fw-bolder'>
-        ISSUED BOOKS
+          ISSUED BOOKS
         </h1>
-        <input type="text" placeholder='Search Book By Name' className='container w-50 mt-3 py-2 rounded fw-bold d-flex justify-content-center' style={{ borderWidth: "5px" }} />
-
+        <SearchBook />
         <div className='mt-3 container-fluid'>
           <div className={mystyle.tableresponsive}>
             <table className='table bg-light'>
@@ -50,7 +50,7 @@ const IssuedBooks = () => {
                   <td className='p-3'>120</td>
 
                   <td className='p-3'>
-                      <button style={{ backgroundColor: "lightseagreen" }} className='text-light px-2 py-1 rounded fw-bolder'>Returned</button>
+                    <button style={{ backgroundColor: "lightseagreen" }} className='text-light px-2 py-1 rounded fw-bolder'>Returned</button>
                   </td>
                 </tr>
               </tbody>
@@ -59,7 +59,7 @@ const IssuedBooks = () => {
         </div>
 
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
