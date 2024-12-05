@@ -13,7 +13,7 @@ const AddBook = () => {
     const [bookDetails, setBookDetails] = useState({
         title: "", author: "", publisher: "", copies: "", bookPic: ""
     })
-    // console.log(bookDetails);
+    console.log(bookDetails);
     const [copyStatus, setCopyStatus] = useState(false)
     const navigate = useNavigate()
 
@@ -66,6 +66,7 @@ const AddBook = () => {
                                 setBookDetails({
                                     title: "", author: "", publisher: "", copies: "", bookPic: ""
                                 })
+                                
                             } else {
                                 if (addBook.status == 406) {
                                     alert(addBook.response.data)
@@ -114,16 +115,16 @@ const AddBook = () => {
                         <div>
                             <Form>
                                 <Form.Group className="mb-3 mt-2" controlId="Title">
-                                    <Form.Control value={bookDetails.title ? bookDetails.title : ""} onChange={(e) => setBookDetails({ ...bookDetails, title: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="text" placeholder="Title" />
+                                    <Form.Control value={bookDetails.title} onChange={(e) => setBookDetails({ ...bookDetails, title: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="text" placeholder="Title" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Author">
-                                    <Form.Control value={bookDetails.author ? bookDetails.author : ""} onChange={(e) => setBookDetails({ ...bookDetails, author: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="text" placeholder="Author" />
+                                    <Form.Control value={bookDetails.author} onChange={(e) => setBookDetails({ ...bookDetails, author: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="text" placeholder="Author" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Publisher">
-                                    <Form.Control value={bookDetails.publisher ? bookDetails.publisher : ""} onChange={(e) => setBookDetails({ ...bookDetails, publisher: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="text" placeholder="Publisher" />
+                                    <Form.Control value={bookDetails.publisher} onChange={(e) => setBookDetails({ ...bookDetails, publisher: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="text" placeholder="Publisher" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="Copies">
-                                    <Form.Control value={bookDetails.copies ? bookDetails.copies : ""} onChange={(e) => setBookDetails({ ...bookDetails, copies: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="number" placeholder="Copies" />
+                                    <Form.Control value={bookDetails.copies} onChange={(e) => setBookDetails({ ...bookDetails, copies: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="number" placeholder="Copies" />
                                 </Form.Group>
                                 {copyStatus&&
                                     <p className='text-start text-danger fw-bold'>*Invalid Input!!!</p>}

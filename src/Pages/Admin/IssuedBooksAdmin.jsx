@@ -12,7 +12,7 @@ const IssuedBooks = () => {
         <h1 style={{ backgroundColor: "#3D3D4A", border: "none", borderRadius: "10px" }} className='container d-flex justify-content-center text-light text-center py-1 w-75 fw-bolder'>
           ISSUED BOOKS
         </h1>
-        <SearchBook />
+        <SearchBook insideIssuedBook={true}/>
         <div className='mt-3 container-fluid'>
           <div className={mystyle.tableresponsive}>
             <table className='table bg-light'>
