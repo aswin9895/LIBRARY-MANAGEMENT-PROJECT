@@ -13,16 +13,17 @@ const AllBooks = ({ insideAdmin }) => {
   const { bookUpdateResponse, setBookUpdateResponse } = useContext(bookUpdateResponseContext)
   const { bookRemovedResponse, setBookRemoveResponse } = useContext(bookRemovedResponseContext)
 
+  // for filter and search 
   const [filterValue, setFilterValue] = useState("title")
   const [searchKey, setSearchKey] = useState("")
+
+  // allbooks get 
   const [allBooks, setAllBooks] = useState([])
+
+  // bookreq function 
   const [requestedBookDetails, setRequestedBookDetails] = useState({
     bookId: "", title: "", author: "", publisher: "", bookPic: "", studentName: "", studentBranch: "", studentId: ""
   })
-  // const [proceedRequest, setProceedRequest] = useState(false)
-
-  // console.log(proceedRequest);
-  console.log(requestedBookDetails);
 
   const navigate = useNavigate()
 
@@ -65,6 +66,7 @@ const AllBooks = ({ insideAdmin }) => {
         "Authorization": `Bearer ${token}`
       }
       try {
+        // to get the book details of the requesting book 
         const requestedBooks = await getSingleBookAPI(id, reqHeader)
         if (requestedBooks.status == 200) {
           const requestedData = requestedBooks.data
@@ -73,28 +75,26 @@ const AllBooks = ({ insideAdmin }) => {
           setRequestedBookDetails({
             bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
           })
-        // }
+          // request book function 
           const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
-          // console.log(postRequestfunction);
           if (postRequestfunction.status == 200) {
             alert("Request Sent Successfully!!!")
           } else {
             if (postRequestfunction.status == 406) {
               alert(postRequestfunction.response.data)
             }
-          }}
-        } catch (error) {
-          console.log(error);
-
+          }
         }
-      // }
+      } catch (error) {
+        console.log(error);
 
-
+      }
     } else {
       alert("Token is missing Please Login")
       setProceedRequest(false)
     }
   }
+
 
   return (
     <div>

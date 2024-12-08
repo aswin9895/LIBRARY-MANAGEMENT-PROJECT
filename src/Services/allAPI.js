@@ -55,3 +55,23 @@ export const requestBookAPI = async (reqBody,reqHeader) => {
 export const getRequestedBookAPI = async (reqHeader) => {
     return await commonAPI("GET", `${SERVER_URL}/allrequestedbooks`, {}, reqHeader)
 }
+
+// rejectrequestBookAPI called by requestedbooksAdmin
+export const rejectrequestBookAPI = async (id,reqHeader) => {
+    return await commonAPI("DELETE", `${SERVER_URL}/rejectrequestbook/${id}/reject`, {},reqHeader)
+}
+
+// singlebookrequestdetailAPI called by requestedbooksAdmin
+export const singlebookrequestdetailAPI = async (id,reqHeader) => {
+    return await commonAPI("GET", `${SERVER_URL}/singlebookrequestdetail/${id}/get`,{},reqHeader)
+}
+
+// issueBookAPI called by requested book page 
+export const issueBookAPI = async (reqBody,reqHeader) => {
+    return await commonAPI("POST", `${SERVER_URL}/issuebook`, reqBody, reqHeader)
+}
+
+// updateCopies called by requested page
+export const updateCopies = async (id,reqHeader) => {
+    return await commonAPI("PUT", `${SERVER_URL}/updatebookcopies/${id}/update`, {},reqHeader)
+}

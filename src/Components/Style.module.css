@@ -1,6 +1,6 @@
 /* landing */
 .bglanding{
-    background-image: url('https://img.freepik.com/free-photo/still-life-books-versus-technology_23-2150062868.jpg?uid=R118424786&ga=GA1.1.2041598839.1720431422&semt=ais_hybrid');
+    background-image: url('../assets/still-life-with-literature-concept.jpg');
     background-attachment: fixed;
     background-size: cover;
 }
