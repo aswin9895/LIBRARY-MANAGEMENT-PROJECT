@@ -70,19 +70,18 @@ const AllBooks = ({ insideAdmin }) => {
         const requestedBooks = await getSingleBookAPI(id, reqHeader)
         if (requestedBooks.status == 200) {
           const requestedData = requestedBooks.data
-          // console.log(requestedData);
           const userDetail = JSON.parse(sessionStorage.getItem("users"))
-          setRequestedBookDetails({
-            bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
-          })
-          // request book function 
-          const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
-          if (postRequestfunction.status == 200) {
-            alert("Request Sent Successfully!!!")
-          } else {
-            if (postRequestfunction.status == 406) {
-              alert(postRequestfunction.response.data)
-            }
+            setRequestedBookDetails({
+              bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
+            })
+            // request book function 
+            const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
+            if (postRequestfunction.status == 200) {
+              alert("Request Sent Successfully!!!")
+            } else {
+              if (postRequestfunction.status == 406) {
+                alert(postRequestfunction.response.data)
+              }
           }
         }
       } catch (error) {
@@ -112,7 +111,7 @@ const AllBooks = ({ insideAdmin }) => {
             <input onChange={(e) => setSearchKey(e.target.value)} type="text" placeholder={`Search Book By ${filterValue}`} className='container py-2 rounded fw-bold' style={{ borderWidth: "5px", width: "" }} />
           </div>
           <div>
-            <select onChange={(e) => setFilterValue(e.target.value)} style={{ border: "none",width:"20px" }} className=' bg-light text-dark' name="" id="">
+            <select onChange={(e) => setFilterValue(e.target.value)} style={{ border: "none", width: "20px" }} className=' bg-light text-dark' name="" id="">
               <option selected hidden disabled className='text-dark' value=""></option>
               <option value="title">Title</option>
               <option value="author">Author</option>
@@ -140,7 +139,7 @@ const AllBooks = ({ insideAdmin }) => {
                   {
                     allBooks?.length > 0 &&
                     allBooks?.map((books, index) => (
-                      <tr>
+                      <tr key={index}>
                         <td className='p-3'>{index + 1}</td>
                         <td className='p-3'>{books?.title}</td>
                         <td className='p-3'>{books?.author}</td>

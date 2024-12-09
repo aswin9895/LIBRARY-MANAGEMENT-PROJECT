@@ -96,3 +96,7 @@ export const getSingleIssuedBookAPI = async (id,reqHeader) => {
     return await commonAPI("GET", `${SERVER_URL}/getsingleissuedbook/${id}/get`,{},reqHeader)
 }
 
+// getIssuedUserAPI
+export const getIssuedUserAPI = async (id,reqHeader) => {
+    return await commonAPI("GET", `${SERVER_URL}/getissuedbooksuser/${id}/get`,{},reqHeader)
+}

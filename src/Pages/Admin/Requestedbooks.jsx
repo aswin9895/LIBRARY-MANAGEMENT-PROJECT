@@ -116,23 +116,28 @@ const Requestedbooks = () => {
           "Authorization": `Bearer ${token}`
         }
         try {
-          // post issuing book
-          const result = await issueBookAPI(issuebook, reqHeader)
-          if (result.status == 200) {
-            alert("Book Issued Successfully")
-            // updating book copies when admin accepts the request 
-            const id = result.data.bookId
-            console.log(id);
-            const updateBookCopies = await updateCopies(id, reqHeader)
-            handleClose()
-            // removing issued books from requested books
-            const removeAcceptrequest = await rejectrequestBookAPI(acceptedRequestId, reqHeader)
-            if (removeAcceptrequest.status == 200) {
-              getAllRequestedBooks()
+          const updateBookCopies = await updateCopies(issuebook.bookId, reqHeader)
+          if (updateBookCopies.status == 200) {
+            // post issuing book
+            const result = await issueBookAPI(issuebook, reqHeader)
+            if (result.status == 200) {
+              alert("Book Issued Successfully")
+              // updating book copies when admin accepts the request 
+              handleClose()
+              // removing issued books from requested books
+              const removeAcceptrequest = await rejectrequestBookAPI(acceptedRequestId, reqHeader)
+              if (removeAcceptrequest.status == 200) {
+                getAllRequestedBooks()
+              }
+            } else if (result.status == 406) {
+              alert(result.response.data)
             }
-          } else if (result.status == 406) {
-            alert(result.response.data)
+          }else{
+            if (updateBookCopies.status==400) {
+             alert(updateBookCopies.response.data.message)
+            }
           }
+
         } catch (error) {
           console.log(error);
         }

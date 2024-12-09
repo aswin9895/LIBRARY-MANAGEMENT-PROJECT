@@ -1,9 +1,57 @@
-import React from 'react'
+import React, { useEffect, useId, useState } from 'react'
 import Header from '../../Components/Header'
 import mystyle from '../../Components/Style.module.css'
 import Footer from '../../Components/Footer'
+import { useNavigate } from 'react-router'
+import { getIssuedUserAPI } from '../../Services/allAPI'
+import SERVER_URL from '../../Services/SERVER_URL'
 
 const IssuedBooks = () => {
+
+  const [issuedBooks, setissuedBooks] = useState([])
+  const [loggedIn, setloggedId] = useState("")
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    const logged = JSON.parse(sessionStorage.getItem("users"))
+    setloggedId(logged._id)
+
+    if (logged.role != "student") {
+      navigate('/login')
+    }
+  }, [])
+
+  useEffect(() => {
+    getIssuedBooks()
+  }, [loggedIn])
+
+  const getIssuedBooks = async () => {
+    const token = sessionStorage.getItem("token")
+    if (token) {
+      const reqHeader = {
+        "Authorization": `Bearer ${token}`
+      }
+      const result = await getIssuedUserAPI(loggedIn, reqHeader)
+      if (result.status == 200) {
+        setissuedBooks(result.data)
+      }
+    } else {
+      alert("token missing please login")
+    }
+  }
+
+   // fine calculation function 
+   const fineCalculation = (returnDate) => {
+    const fine = 3
+    const today = new Date()
+    const returnDateObj = new Date(returnDate)
+    // console.log(returnDateObj);
+    const diffTime = today - returnDateObj;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays * fine : 0;
+
+  }
+
   return (
     <div>
       <Header />
@@ -12,7 +60,8 @@ const IssuedBooks = () => {
           MY ISSUED BOOKS
         </h1>
         <div className='mt-5 container-fluid'>
-          <div className={mystyle.tableresponsive}>
+          {issuedBooks?.length>0?
+            <div className={mystyle.tableresponsive}>
             <table className='table bg-light'>
               <thead style={{ fontSize: "18px" }} className='text-dark fw-bolder border shadow'>
                 <tr>
@@ -24,36 +73,39 @@ const IssuedBooks = () => {
                   <th className='p-3'>Issued Date</th>
                   <th className='p-3'>Return Date</th>
                   <th className='p-3'>Fine</th>
-                  <th className='p-3'>...</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className='p-3'>1</td>
-                  <td className='p-3'>Data Structure</td>
-                  <td className='p-3'>Martin Joz</td>
-                  <td className='p-3'>AC Books</td>
+                {
+                  issuedBooks?.map((books,index)=>(
+                    <tr key={index}>
+                  <td className='p-3'>{index+1}</td>
+                  <td className='p-3'>{books?.title}</td>
+                  <td className='p-3'>{books?.author}</td>
+                  <td className='p-3'>{books?.publisher}</td>
                   <td className='p-3'>
                     <img
                       width={'100px'}
                       height={'120px'}
-                      src="https://rukminim1.flixcart.com/image/1664/1664/book/6/8/0/data-structures-original-imaddm9qk9rehehn.jpeg?q=90"
+                      src={`${SERVER_URL}/uploads/${books?.bookPic}`}
                       alt="no-image"
                     />
                   </td>
-                  <td className='p-3'>20-10-2009</td>
-                  <td className='p-3'>20-10-2009</td>
-                  <td className='p-3'>₹<span>20</span></td>
-                  <td className='p-3'>
-                  <button style={{ backgroundColor: "red", border: "none" }} className='text-light px-2 py-1 rounded fw-bolder'>Return</button>                 
-                  </td>
+                  <td className='p-3'>{books?.issuedDate}</td>
+                  <td className='p-3'>{books?.returnDate}</td>
+                  <td className='p-3'>₹<span>{fineCalculation(books?.returnDate)}</span></td>
                 </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>
+        :
+        <div className="mt-5 pt-5 fw-bolder fs-5 text-danger">No Books Issued!!!</div>  
+        }
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
