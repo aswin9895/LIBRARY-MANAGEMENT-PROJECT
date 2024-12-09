@@ -100,3 +100,18 @@ export const getSingleIssuedBookAPI = async (id,reqHeader) => {
 export const getIssuedUserAPI = async (id,reqHeader) => {
     return await commonAPI("GET", `${SERVER_URL}/getissuedbooksuser/${id}/get`,{},reqHeader)
 }
+
+// recommendBookAPI
+export const recommendBookAPI = async (reqBody,reqHeader) => {
+    return await commonAPI("POST", `${SERVER_URL}/recommendbook`, reqBody, reqHeader)
+}
+
+// getrecomendbooks
+export const getrecomendbooksAPI = async (reqHeader) => {
+    return await commonAPI("GET", `${SERVER_URL}/getallrecomendbooks`,{},reqHeader)
+}
+
+// removerecomendbookAPI
+export const removerecomendbookAPI = async (id,reqHeader) => {
+    return await commonAPI("DELETE", `${SERVER_URL}/removereccomendbook/${id}/remove`,{},reqHeader)
+}
