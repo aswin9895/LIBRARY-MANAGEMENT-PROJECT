@@ -34,59 +34,53 @@ const AllBooks = ({ insideAdmin }) => {
 
   // getallbook function
   const getAllBooks = async () => {
-    const token = sessionStorage.getItem("token")
-    if (token) {
-      const reqHeader = {
-        "Authorization": `Bearer ${token}`
-      }
       const field = filterValue
       const value = searchKey
-      // console.log(reqHeader, field, value);
-
       try {
-        const allBooks = await getBookAPI(field, value, reqHeader)
+        const allBooks = await getBookAPI(field, value)
         if (allBooks.status == 200) {
           setAllBooks(allBooks.data)
         }
       } catch (error) {
         console.log(error);
-
       }
-    } else {
-      navigate('/login')
-      // alert("Token Missing... Please Login!!!")
     }
-  }
+  
 
   // Bookrequest function 
   const handleRequest = async (id) => {
     const token = sessionStorage.getItem("token")
+    const logged = JSON.parse(sessionStorage.getItem("users"))
     if (token) {
       const reqHeader = {
         "Authorization": `Bearer ${token}`
       }
-      try {
-        // to get the book details of the requesting book 
-        const requestedBooks = await getSingleBookAPI(id, reqHeader)
-        if (requestedBooks.status == 200) {
-          const requestedData = requestedBooks.data
-          const userDetail = JSON.parse(sessionStorage.getItem("users"))
-            setRequestedBookDetails({
-              bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
-            })
-            // request book function 
-            const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
-            if (postRequestfunction.status == 200) {
-              alert("Request Sent Successfully!!!")
-            } else {
-              if (postRequestfunction.status == 406) {
-                alert(postRequestfunction.response.data)
-              }
+      if (logged.role!="student") {
+        navigate('/login')
+      } else {
+        try {
+          // to get the book details of the requesting book 
+          const requestedBooks = await getSingleBookAPI(id, reqHeader)
+          if (requestedBooks.status == 200) {
+            const requestedData = requestedBooks.data
+            const userDetail = JSON.parse(sessionStorage.getItem("users"))
+              setRequestedBookDetails({
+                bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
+              })
+              // request book function 
+              const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
+              if (postRequestfunction.status == 200) {
+                alert("Request Sent Successfully!!!")
+              } else {
+                if (postRequestfunction.status == 406) {
+                  alert(postRequestfunction.response.data)
+                }
+            }
           }
+        } catch (error) {
+          console.log(error);
+  
         }
-      } catch (error) {
-        console.log(error);
-
       }
     } else {
       alert("Token is missing Please Login")

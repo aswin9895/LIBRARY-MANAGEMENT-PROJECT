@@ -101,7 +101,7 @@ const IssuedBooks = () => {
             </table>
           </div>
         :
-        <div className="mt-5 pt-5 fw-bolder fs-5 text-danger">No Books Issued!!!</div>  
+        <div className="mt-5 pt-5 fw-bolder fs-5 text-danger text-center">No Books Issued!!!</div>  
         }
         </div>
       </div>

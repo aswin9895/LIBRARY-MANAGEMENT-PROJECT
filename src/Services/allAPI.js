@@ -27,8 +27,8 @@ export const addBookAPI = async (reqBody,reqHeader) => {
 }
 
 // getBookAPI called by allBook page
-export const getBookAPI = async (field,value,reqHeader) => {
-    return await commonAPI("GET", `${SERVER_URL}/getbook?field=${field}&value=${value}`, {}, reqHeader)
+export const getBookAPI = async (field,value) => {
+    return await commonAPI("GET", `${SERVER_URL}/getbook?field=${field}&value=${value}`, {})
 }
 
 // deleteBookAPI called by editbook page

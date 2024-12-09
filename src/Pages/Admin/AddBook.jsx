@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../Components/Header'
 import booklogo from '../../assets/booklogo.png'
 import { Form } from 'react-bootstrap'
@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router'
 import { addBookAPI } from '../../Services/allAPI'
 
 const AddBook = () => {
-
     const [preview, setPreview] = useState("")
     const [imageFileStatus, setImageFileStatus] = useState(false)
     const [bookDetails, setBookDetails] = useState({
@@ -66,28 +65,23 @@ const AddBook = () => {
                                 setBookDetails({
                                     title: "", author: "", publisher: "", copies: "", bookPic: ""
                                 })
-                                
                             } else {
                                 if (addBook.status == 406) {
                                     alert(addBook.response.data)
                                 }
                             }
-    
                         } catch (error) {
                             console.log(error);
                         }
-                    }else{
+                    } else {
                         navigate('/login')
                     }
-                    
                 } else {
                     alert("Token is Missing... Please Login!!!")
                 }
             } catch (error) {
                 console.log(error);
-
             }
-
         } else {
             alert("Please Fill The Form Completely!!!")
         }
@@ -126,7 +120,7 @@ const AddBook = () => {
                                 <Form.Group className="mb-3" controlId="Copies">
                                     <Form.Control value={bookDetails.copies} onChange={(e) => setBookDetails({ ...bookDetails, copies: e.target.value })} style={{ color: "black", padding: "15px", borderRadius: "10px" }} className='fw-bold bg-light' type="number" placeholder="Copies" />
                                 </Form.Group>
-                                {copyStatus&&
+                                {copyStatus &&
                                     <p className='text-start text-danger fw-bold'>*Invalid Input!!!</p>}
                             </Form>
                         </div>

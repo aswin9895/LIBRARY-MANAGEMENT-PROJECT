@@ -9,7 +9,7 @@ const LandingPage = () => {
     const landingLoading = () => {
         setloading(true)
         setTimeout(() => {
-            navigate('/login')
+            navigate('/allbooks')
         }, 1000);
     }
     return (

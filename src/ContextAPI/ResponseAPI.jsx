@@ -10,15 +10,14 @@ const ResponseAPI = ({ children }) => {
     const [bookUpdateResponse, setBookUpdateResponse] = useState("")
 
     return (
-                    <bookUpdateResponseContext.Provider value={{ bookUpdateResponse, setBookUpdateResponse }}>
-                        <bookRemovedResponseContext.Provider value={{bookRemovedResponse, setBookRemoveResponse}}>
-                            <newUserRegisterResponseContext.Provider value={{ newUserRegisterResponse, setNewUserRegisterResponse }}>
-                                {children}
-                            </newUserRegisterResponseContext.Provider>
-                        </bookRemovedResponseContext.Provider>
-                    </bookUpdateResponseContext.Provider>
+        <bookUpdateResponseContext.Provider value={{ bookUpdateResponse, setBookUpdateResponse }}>
+            <bookRemovedResponseContext.Provider value={{ bookRemovedResponse, setBookRemoveResponse }}>
+                <newUserRegisterResponseContext.Provider value={{ newUserRegisterResponse, setNewUserRegisterResponse }}>
+                    {children}
+                </newUserRegisterResponseContext.Provider>
+            </bookRemovedResponseContext.Provider>
+        </bookUpdateResponseContext.Provider>
     )
-    
 }
 
 export default ResponseAPI

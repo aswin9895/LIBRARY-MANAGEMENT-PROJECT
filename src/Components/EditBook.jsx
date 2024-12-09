@@ -12,20 +12,23 @@ const EditBook = ({ allBooks }) => {
     const [preview, setPreview] = useState("")
     const [fileStatus, setFileStatus] = useState(false)
     const [bookDetails, setBookDetails] = useState({
-        title: allBooks.title, author: allBooks.author, publisher: allBooks.publisher, copies: allBooks.copies, bookPic: allBooks.bookPic
+        title: allBooks.title, author: allBooks.author, publisher: allBooks.publisher, copies: allBooks.copies || 0, bookPic: allBooks.bookPic
     })
-    // console.log(allBooks);
 
-    // console.log(bookDetails);
     const [show, setShow] = useState(false);
     const navigate = useNavigate()
     const handleClose = () => {
+        setShow(false);
         setBookDetails({
             title: allBooks.title, author: allBooks.author, publisher: allBooks.publisher, copies: allBooks.copies, bookPic: allBooks.bookPic
         })
-        setShow(false);
     }
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setBookDetails({
+            title: allBooks.title, author: allBooks.author, publisher: allBooks.publisher, copies: allBooks.copies, bookPic: allBooks.bookPic
+        })
+        setShow(true);
+    }
 
     // image validation
     useEffect(() => {
@@ -71,7 +74,7 @@ const EditBook = ({ allBooks }) => {
     // handleSubmit function
     const handleSubmit = async (id) => {
         const { title, author, publisher, copies, bookPic } = bookDetails
-        if (title && author && publisher && copies) {
+        if (title && author && publisher && copies!==null&&copies!==undefined) {
             // alert("api")
             const reqBody = new FormData()
             reqBody.append("title", title)
@@ -89,9 +92,8 @@ const EditBook = ({ allBooks }) => {
                     const updateBook = await updateBookAPI(id, reqBody, reqHeader)
                     if (updateBook.status == 200) {
                         alert("Book Updated Successfully!!!")
-                        handleClose()
                         setBookUpdateResponse(updateBook)
-
+                        handleClose()
                     }
                 } catch (error) {
                     console.log(error);
