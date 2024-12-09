@@ -91,7 +91,6 @@ const AllBooks = ({ insideAdmin }) => {
       }
     } else {
       alert("Token is missing Please Login")
-      setProceedRequest(false)
     }
   }
 
@@ -113,7 +112,7 @@ const AllBooks = ({ insideAdmin }) => {
             <input onChange={(e) => setSearchKey(e.target.value)} type="text" placeholder={`Search Book By ${filterValue}`} className='container py-2 rounded fw-bold' style={{ borderWidth: "5px", width: "" }} />
           </div>
           <div>
-            <select onChange={(e) => setFilterValue(e.target.value)} style={{ border: "none" }} className='w-25 bg-light text-dark' name="" id="">
+            <select onChange={(e) => setFilterValue(e.target.value)} style={{ border: "none",width:"20px" }} className=' bg-light text-dark' name="" id="">
               <option selected hidden disabled className='text-dark' value=""></option>
               <option value="title">Title</option>
               <option value="author">Author</option>

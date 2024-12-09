@@ -75,3 +75,24 @@ export const issueBookAPI = async (reqBody,reqHeader) => {
 export const updateCopies = async (id,reqHeader) => {
     return await commonAPI("PUT", `${SERVER_URL}/updatebookcopies/${id}/update`, {},reqHeader)
 }
+
+// getIssuedBooksAPI called by issuedbooks page 
+export const getIssuedBooksAPI = async (field,value,reqHeader) => {
+    return await commonAPI("GET", `${SERVER_URL}/getissuedbooks?field=${field}&value=${value}`, {}, reqHeader)
+}
+
+// removeIssuedBooksAPI called by issuedbooksadmin
+export const removeIssuedBooksAPI = async (id,reqHeader) => {
+    return await commonAPI("DELETE", `${SERVER_URL}/removeissuedbooks/${id}/remove`,{},reqHeader)
+}
+
+// IncrementBookCopiesAPI called by issuedboooksadmin
+export const IncrementBookCopiesAPI = async (id,reqHeader) => {
+    return await commonAPI("PUT", `${SERVER_URL}/updateincrementbook/${id}/update`,{},reqHeader)
+}
+
+// getSingleIssuedBookAPI 
+export const getSingleIssuedBookAPI = async (id,reqHeader) => {
+    return await commonAPI("GET", `${SERVER_URL}/getsingleissuedbook/${id}/get`,{},reqHeader)
+}
+

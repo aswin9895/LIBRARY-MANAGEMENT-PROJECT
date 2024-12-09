@@ -80,8 +80,6 @@ const Requestedbooks = () => {
         const getRequestedBooks = await getRequestedBookAPI(reqHeader)
         if (getRequestedBooks.status == 200) {
           setRequestedBooks(getRequestedBooks.data)
-          console.log(requestedBooks);
-
         }
       } catch (error) {
         console.log(error);
@@ -174,7 +172,7 @@ const Requestedbooks = () => {
                 <tbody >
                   {
                     requestedBooks.map((book, index) => (
-                      <tr className='border'>
+                      <tr key={index} className='border'>
                         <td className='p-3'>{index + 1}</td>
                         <td className='p-3'>{book?.title}</td>
                         <td className='p-3'>{book?.author}</td>
