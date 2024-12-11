@@ -1,5 +1,5 @@
 import commonAPI from "./commonAPI";
-import SERVER_URL from "./SERVER_URL.JS";
+import SERVER_URL from "./SERVER_URL";
 
 // registerUserAPI called by register page 
 export const registerUserAPI = async (reqBody) => {
