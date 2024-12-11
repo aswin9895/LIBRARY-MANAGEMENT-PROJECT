@@ -1,6 +1,6 @@
 /* landing */
 .bglanding {
-    background-image: url('../assets/still-life-with-literature-concept.jpg');
+    background-image: url('https://images.pexels.com/photos/1848922/pexels-photo-1848922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
     background-attachment: fixed;
     background-size: cover;
 }
