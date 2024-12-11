@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import mystyle from '../Components/Style.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
@@ -6,10 +6,13 @@ import { Spinner } from 'react-bootstrap'
 const LandingPage = () => {
     const [loading, setloading] = useState(false)
     const navigate = useNavigate()
+    useEffect(()=>{
+        sessionStorage.clear()
+    },[])
     const landingLoading = () => {
         setloading(true)
         setTimeout(() => {
-            navigate('/allbooks')
+            navigate('/allbooksguest')
         }, 1000);
     }
     return (

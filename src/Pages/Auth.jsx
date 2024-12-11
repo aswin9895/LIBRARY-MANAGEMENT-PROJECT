@@ -4,9 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
 import { loginUserAPI, registerUserAPI } from '../Services/allAPI'
 import { newUserRegisterResponseContext } from '../ContextAPI/ResponseAPI'
+import { tokenAuthContext } from '../ContextAPI/AuthContet'
 
 const Auth = ({ insideRegister }) => {
-
+  const { isAuthorised, setIsAuthorised } = useContext(tokenAuthContext)
   const { newUserRegisterResponse, setNewUserRegisterResponse } = useContext(newUserRegisterResponseContext)
 
   const [userDetails, setuserDetails] = useState({
@@ -31,6 +32,7 @@ const Auth = ({ insideRegister }) => {
 
 useEffect(()=>{
   sessionStorage.clear()
+  setIsAuthorised(false)
 },[])
 
   // registeration function
@@ -80,6 +82,7 @@ useEffect(()=>{
         sessionStorage.setItem("users", JSON.stringify(login.data.user))
         sessionStorage.setItem("token", login.data.token)
         const loginedRole = login.data.user.role
+        setIsAuthorised(true)
         // console.log(loginedRole);
         if (loginedRole == "student") {
           navigate('/allbooks')

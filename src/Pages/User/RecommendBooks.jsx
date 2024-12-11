@@ -17,7 +17,7 @@ console.log(recommendbooks);
   useEffect(() => {
     const logged = JSON.parse(sessionStorage.getItem("users"))
     if (logged.role != "student") {
-      navigate('/login')
+      navigate('/*')
     }
   }, [])
 

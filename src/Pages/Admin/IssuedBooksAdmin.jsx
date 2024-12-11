@@ -14,13 +14,13 @@ const IssuedBooks = () => {
   const navigate = useNavigate()
   // console.log(issuedBooks);
 
-  // role validation
-  useEffect(() => {
-    const loggedIn = JSON.parse(sessionStorage.getItem("users"))
-    if (loggedIn.role != "admin") {
-      navigate('/login')
-    }
-  }, [])
+ // role validation
+ useEffect(() => {
+  const logged = JSON.parse(sessionStorage.getItem("users"))
+  if (logged.role != "admin") {
+      navigate('/*')
+  }
+}, [])
 
   // get all isuued book function call 
   useEffect(() => {

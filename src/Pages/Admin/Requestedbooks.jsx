@@ -56,11 +56,11 @@ const Requestedbooks = () => {
     setShow(true);
   }
 
-  // rejecting user to access the page
+  // role validation
   useEffect(() => {
-    const isAdmin = JSON.parse(sessionStorage.getItem("users"))
-    if (isAdmin.role != "admin") {
-      navigate('/login')
+    const logged = JSON.parse(sessionStorage.getItem("users"))
+    if (logged.role != "admin") {
+      navigate('/*')
     }
   }, [])
 
@@ -132,9 +132,9 @@ const Requestedbooks = () => {
             } else if (result.status == 406) {
               alert(result.response.data)
             }
-          }else{
-            if (updateBookCopies.status==400) {
-             alert(updateBookCopies.response.data.message)
+          } else {
+            if (updateBookCopies.status == 400) {
+              alert(updateBookCopies.response.data.message)
             }
           }
 

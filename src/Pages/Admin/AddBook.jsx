@@ -16,6 +16,14 @@ const AddBook = () => {
     const [copyStatus, setCopyStatus] = useState(false)
     const navigate = useNavigate()
 
+    // role validation
+    useEffect(() => {
+        const token = sessionStorage.getItem('token')
+        const logged = JSON.parse(sessionStorage.getItem("users"))
+        if (logged.role != "admin" || !token) {
+            navigate('/*')
+        }
+    }, [])
     // bookcopies validation
     useEffect(() => {
         if (bookDetails.copies) {
@@ -56,25 +64,20 @@ const AddBook = () => {
                         "Content-Type": "multipart/form-data",
                         "Authorization": `Bearer ${token}`
                     }
-                    const admin = JSON.parse(sessionStorage.getItem("users"))
-                    if (admin.role == "admin") {
-                        try {
-                            const addBook = await addBookAPI(reqBody, reqHeader)
-                            if (addBook.status == 200) {
-                                alert("Book Added Successfully!!!")
-                                setBookDetails({
-                                    title: "", author: "", publisher: "", copies: "", bookPic: ""
-                                })
-                            } else {
-                                if (addBook.status == 406) {
-                                    alert(addBook.response.data)
-                                }
+                    try {
+                        const addBook = await addBookAPI(reqBody, reqHeader)
+                        if (addBook.status == 200) {
+                            alert("Book Added Successfully!!!")
+                            setBookDetails({
+                                title: "", author: "", publisher: "", copies: "", bookPic: ""
+                            })
+                        } else {
+                            if (addBook.status == 406) {
+                                alert(addBook.response.data)
                             }
-                        } catch (error) {
-                            console.log(error);
                         }
-                    } else {
-                        navigate('/login')
+                    } catch (error) {
+                        console.log(error);
                     }
                 } else {
                     alert("Token is Missing... Please Login!!!")

@@ -11,10 +11,11 @@ const RecommendedBooks = () => {
 
   const navigate = useNavigate()
 
+  // role validation
   useEffect(() => {
     const logged = JSON.parse(sessionStorage.getItem("users"))
     if (logged.role != "admin") {
-      navigate('/login')
+      navigate('/*')
     }
   }, [])
   useEffect(() => {

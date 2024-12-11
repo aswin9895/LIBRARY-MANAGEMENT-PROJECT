@@ -17,7 +17,7 @@ const IssuedBooks = () => {
     setloggedId(logged._id)
 
     if (logged.role != "student") {
-      navigate('/login')
+      navigate('/*')
     }
   }, [])
 

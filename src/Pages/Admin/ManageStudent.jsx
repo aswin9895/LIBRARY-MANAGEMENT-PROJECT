@@ -14,7 +14,13 @@ const ManageStudent = () => {
   console.log(studentDetails);
 
   const navigate = useNavigate()
-
+  // role validation
+  useEffect(() => {
+    const logged = JSON.parse(sessionStorage.getItem("users"))
+    if (logged.role != "admin") {
+      navigate('/*')
+    }
+  }, [])
   useEffect(() => {
     getAllStudents()
   }, [newUserRegisterResponse])
@@ -26,21 +32,10 @@ const ManageStudent = () => {
       const reqHeader = {
         "Authorization": `Bearer ${token}`
       }
-      const admin = JSON.parse(sessionStorage.getItem("users"))
-      // console.log(token,admin);
-      const isAdmin = admin.role == "admin"
-      // console.log(isAdmin);
       try {
-        if (isAdmin == true) {
-          const allStudents = await getAllUsers(reqHeader)
-          if (allStudents.status == 200) {
-            setStudentDetails(allStudents.data)
-            // console.log(allStudents.data);
-          }
-        } else {
-          navigate('/login')
-          // alert("You are not allowed in this page!!!")
-          // sessionStorage.clear()
+        const allStudents = await getAllUsers(reqHeader)
+        if (allStudents.status == 200) {
+          setStudentDetails(allStudents.data)
         }
       } catch (error) {
         console.log(error);

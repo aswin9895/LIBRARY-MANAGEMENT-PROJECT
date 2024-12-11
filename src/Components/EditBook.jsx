@@ -29,7 +29,6 @@ const EditBook = ({ allBooks }) => {
         })
         setShow(true);
     }
-
     // image validation
     useEffect(() => {
         if (bookDetails.bookPic.type == "image/png" || bookDetails.bookPic.type == "image/jpg" || bookDetails.bookPic.type == "image/jpeg") {
@@ -49,23 +48,16 @@ const EditBook = ({ allBooks }) => {
             const reqHeader = {
                 "Authorization": `Bearer ${token}`
             }
-            const admin = JSON.parse(sessionStorage.getItem("users"))
-            if (admin.role == "admin") {
-                try {
-                    const removeBook = await deleteBookAPI(id, reqHeader)
-                    if (removeBook.status == 200) {
-                        // bookremove response 
-                        alert("Book Removed Successfully!!!")
-                        setBookRemoveResponse(removeBook)
-                    }
-                } catch (error) {
-
+            try {
+                const removeBook = await deleteBookAPI(id, reqHeader)
+                if (removeBook.status == 200) {
+                    // bookremove response 
+                    alert("Book Removed Successfully!!!")
+                    setBookRemoveResponse(removeBook)
                 }
-            } else {
-                navigate('/login')
+            } catch (error) {
+
             }
-
-
         } else {
             alert("Token missing... Please login!!!")
         }
@@ -74,7 +66,7 @@ const EditBook = ({ allBooks }) => {
     // handleSubmit function
     const handleSubmit = async (id) => {
         const { title, author, publisher, copies, bookPic } = bookDetails
-        if (title && author && publisher && copies!==null&&copies!==undefined) {
+        if (title && author && publisher && copies !== null && copies !== undefined) {
             // alert("api")
             const reqBody = new FormData()
             reqBody.append("title", title)
@@ -97,7 +89,6 @@ const EditBook = ({ allBooks }) => {
                     }
                 } catch (error) {
                     console.log(error);
-
                 }
             }
         } else {

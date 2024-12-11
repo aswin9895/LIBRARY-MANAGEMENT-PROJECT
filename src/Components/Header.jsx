@@ -1,12 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import mystyle from '../Components/Style.module.css';
 import { Dropdown } from 'react-bootstrap';
+import { useContext } from 'react';
+import { tokenAuthContext } from '../ContextAPI/AuthContet';
 
-const Header = ({ AdminHeader }) => {
-
+const Header = ({ AdminHeader,GuestHeader }) => {
+  const { isAuthorised, setIsAuthorised } = useContext(tokenAuthContext)
   const navigate=useNavigate()
   const handleLogout = ()=>{
     sessionStorage.clear()
+    setIsAuthorised(false)
     navigate('/login')
   }
 
@@ -20,7 +23,10 @@ const Header = ({ AdminHeader }) => {
       </div>
       <div className='d-flex align-items-center'>
         <div>
-          <Dropdown>
+          {GuestHeader?
+          <Link style={{textDecoration:"none"}} to={'/login'}><button style={{border:"none"}} className='text-light fw-bolder  bg-transparent'>Login</button></Link>
+          :
+            <Dropdown>
             <Dropdown.Toggle style={{ border: "none" }} className='bg-dark text-light' id="dropdown-basic">
               <i class="fa-solid fa-bars"></i>
             </Dropdown.Toggle>
@@ -44,10 +50,11 @@ const Header = ({ AdminHeader }) => {
                   </>
               }
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown>}
         </div>
         <div className='ms-3'>
-          <Dropdown>
+          {!GuestHeader&&
+            <Dropdown>
             <Dropdown.Toggle style={{ border: "none" }} className='bg-dark text-light' id="dropdown-basic">
               <i class="fa-regular fa-user"></i>
             </Dropdown.Toggle>
@@ -63,7 +70,7 @@ const Header = ({ AdminHeader }) => {
                   </>
               }
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown>}
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router'
 import { bookRemovedResponseContext, bookUpdateResponseContext } from '../ContextAPI/ResponseAPI'
 
 
-const AllBooks = ({ insideAdmin }) => {
+const AllBooks = ({ insideAdmin, insideguest }) => {
   const { bookUpdateResponse, setBookUpdateResponse } = useContext(bookUpdateResponseContext)
   const { bookRemovedResponse, setBookRemoveResponse } = useContext(bookRemovedResponseContext)
 
@@ -26,26 +26,28 @@ const AllBooks = ({ insideAdmin }) => {
   })
 
   const navigate = useNavigate()
-
+  useEffect(() => {
+    if (insideguest) {
+      sessionStorage.clear()
+    }
+  }, [insideguest])
   // get all books call
   useEffect(() => {
     getAllBooks()
   }, [bookRemovedResponse, filterValue, searchKey, bookUpdateResponse])
-
   // getallbook function
   const getAllBooks = async () => {
-      const field = filterValue
-      const value = searchKey
-      try {
-        const allBooks = await getBookAPI(field, value)
-        if (allBooks.status == 200) {
-          setAllBooks(allBooks.data)
-        }
-      } catch (error) {
-        console.log(error);
+    const field = filterValue
+    const value = searchKey
+    try {
+      const allBooks = await getBookAPI(field, value)
+      if (allBooks.status == 200) {
+        setAllBooks(allBooks.data)
       }
+    } catch (error) {
+      console.log(error);
     }
-  
+  }
 
   // Bookrequest function 
   const handleRequest = async (id) => {
@@ -55,7 +57,7 @@ const AllBooks = ({ insideAdmin }) => {
       const reqHeader = {
         "Authorization": `Bearer ${token}`
       }
-      if (logged.role!="student") {
+      if (logged.role != "student") {
         navigate('/login')
       } else {
         try {
@@ -64,22 +66,21 @@ const AllBooks = ({ insideAdmin }) => {
           if (requestedBooks.status == 200) {
             const requestedData = requestedBooks.data
             const userDetail = JSON.parse(sessionStorage.getItem("users"))
-              setRequestedBookDetails({
-                bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
-              })
-              // request book function 
-              const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
-              if (postRequestfunction.status == 200) {
-                alert("Request Sent Successfully!!!")
-              } else {
-                if (postRequestfunction.status == 406) {
-                  alert(postRequestfunction.response.data)
-                }
+            setRequestedBookDetails({
+              bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
+            })
+            // request book function 
+            const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
+            if (postRequestfunction.status == 200) {
+              alert("Request Sent Successfully!!!")
+            } else {
+              if (postRequestfunction.status == 406) {
+                alert(postRequestfunction.response.data)
+              }
             }
           }
         } catch (error) {
           console.log(error);
-  
         }
       }
     } else {
@@ -90,11 +91,17 @@ const AllBooks = ({ insideAdmin }) => {
 
   return (
     <div>
-      {
-        insideAdmin ?
-          <Header AdminHeader={true} />
-          :
-          <Header />
+      {insideguest ?
+        <Header GuestHeader={true} />
+        :
+        <>
+          {
+            insideAdmin ?
+              <Header AdminHeader={true} />
+              :
+              <Header />
+          }
+        </>
       }
       <div style={{ paddingTop: "170px", backgroundColor: "black", minHeight: "100vh" }}>
         <h1 style={{ backgroundColor: "#3D3D4A", border: "none", borderRadius: "10px" }} className='container d-flex justify-content-center text-light text-center py-1 w-75 fw-bolder'>
