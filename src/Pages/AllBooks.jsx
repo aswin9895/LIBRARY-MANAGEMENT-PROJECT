@@ -51,38 +51,51 @@ const AllBooks = ({ insideAdmin, insideguest }) => {
 
   // Bookrequest function 
   const handleRequest = async (id) => {
-    const token = sessionStorage.getItem("token")
-    const logged = JSON.parse(sessionStorage.getItem("users"))
-    if (token) {
-      const reqHeader = {
-        "Authorization": `Bearer ${token}`
-      }
-      try {
-        // to get the book details of the requesting book 
-        const requestedBooks = await getSingleBookAPI(id, reqHeader)
-        if (requestedBooks.status == 200) {
-          const requestedData = requestedBooks.data
-          const userDetail = JSON.parse(sessionStorage.getItem("users"))
-          setRequestedBookDetails({
-            bookId: requestedData._id, title: requestedData.title, author: requestedData.author, publisher: requestedData.publisher, bookPic: requestedData.bookPic, studentName: userDetail.name, studentBranch: userDetail.branch, studentId: userDetail._id
-          })
-          // request book function 
-          const postRequestfunction = await requestBookAPI(requestedBookDetails, reqHeader)
-          if (postRequestfunction.status == 200) {
-            alert("Request Sent Successfully!!!")
-          } else {
-            if (postRequestfunction.status == 406) {
-              alert(postRequestfunction.response.data)
-            }
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      alert("Token is missing Please Login")
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      alert("Token is missing. Please Login");
+      return;
     }
-  }
+
+    const reqHeader = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    try {
+      // Fetch the book details
+      const requestedBooks = await getSingleBookAPI(id, reqHeader);
+      if (requestedBooks.status === 200) {
+        const requestedData = requestedBooks.data;
+        const userDetail = JSON.parse(sessionStorage.getItem("users"));
+
+        // Create the request details object
+        const requestData = {
+          bookId: requestedData._id,
+          title: requestedData.title,
+          author: requestedData.author,
+          publisher: requestedData.publisher,
+          bookPic: requestedData.bookPic,
+          studentName: userDetail.name,
+          studentBranch: userDetail.branch,
+          studentId: userDetail._id,
+        };
+
+        // Request the book
+        const postRequestFunction = await requestBookAPI(requestData, reqHeader);
+        if (postRequestFunction.status === 200) {
+          alert("Request Sent Successfully!!!");
+        } else if (postRequestFunction.status === 406) {
+          alert(postRequestFunction.response.data);
+        }
+      }
+    } catch (error) {
+      console.error("Error in handleRequest:", error);
+      alert("An error occurred while processing the request.");
+    }
+  };
+
+
+
 
   return (
     <div>

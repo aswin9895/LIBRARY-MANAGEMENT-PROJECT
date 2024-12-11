@@ -8,6 +8,7 @@ import { adminAuthContext, tokenAuthContext, userAuthContext } from '../ContextA
 
 const Auth = ({ insideRegister }) => {
   const { isUser, setisUser } = useContext(userAuthContext)
+  const { isAdmin, setisAdmin } = useContext(adminAuthContext)
   const { isAuthorised, setIsAuthorised } = useContext(tokenAuthContext)
   const { newUserRegisterResponse, setNewUserRegisterResponse } = useContext(newUserRegisterResponseContext)
 
