@@ -18,10 +18,13 @@ const RecommendedBooks = () => {
       navigate('/*')
     }
   }, [])
+
+  // recomended book calling
   useEffect(() => {
     getRecomendBooks()
   }, [])
 
+  // get recomended books function 
   const getRecomendBooks = async () => {
     const token = sessionStorage.getItem("token")
     if (token) {
@@ -35,13 +38,13 @@ const RecommendedBooks = () => {
         }
       } catch (error) {
         console.log(error);
-
       }
     } else {
       alert("token missing please login!!!")
     }
   }
 
+  // removerecomend book function 
   const removeRecomendBook = async (id) => {
     const token = sessionStorage.getItem("token")
     if (token) {

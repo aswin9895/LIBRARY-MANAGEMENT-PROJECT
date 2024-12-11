@@ -6,9 +6,11 @@ import { Spinner } from 'react-bootstrap'
 const LandingPage = () => {
     const [loading, setloading] = useState(false)
     const navigate = useNavigate()
-    useEffect(()=>{
+
+    useEffect(() => {
         sessionStorage.clear()
-    },[])
+    }, [])
+
     const landingLoading = () => {
         setloading(true)
         setTimeout(() => {
@@ -30,8 +32,8 @@ const LandingPage = () => {
                 <h1 className='fw-bolder text-light' style={{ fontSize: "60px" }}>LIBRARY <span className='text-warning'>MANAGEMENT</span> <br /> <span style={{ lineHeight: "50px" }}>SYSTEM</span><br /></h1>
                 <p className='fw-bold text-light fs-5'>LMS offers students to check all available boks in the library and reserve <br />them for a certain period of time.</p>
                 <button onClick={landingLoading} style={{ backgroundColor: "lightblue" }} className='fw-bolder px-2 py-2 rounded d-flex align-items-center'>Get Started{loading &&
-                        <Spinner className='ms-2 fw-bolder' animation="border" variant="light" />
-                    }</button>
+                    <Spinner className='ms-2 fw-bolder' animation="border" variant="light" />
+                }</button>
             </div>
         </div>
     )

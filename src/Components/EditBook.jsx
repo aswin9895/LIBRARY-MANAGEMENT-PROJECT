@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
-import booklogo from '../assets/booklogo.png'
-import { useNavigate } from 'react-router';
 import { deleteBookAPI, updateBookAPI } from '../Services/allAPI';
 import { bookRemovedResponseContext, bookUpdateResponseContext } from '../ContextAPI/ResponseAPI';
 import SERVER_URL from '../Services/SERVER_URL';
 
 const EditBook = ({ allBooks }) => {
+
     const { bookUpdateResponse, setBookUpdateResponse } = useContext(bookUpdateResponseContext)
     const { bookRemovedResponse, setBookRemoveResponse } = useContext(bookRemovedResponseContext)
+
     const [preview, setPreview] = useState("")
     const [fileStatus, setFileStatus] = useState(false)
     const [bookDetails, setBookDetails] = useState({
@@ -16,7 +16,6 @@ const EditBook = ({ allBooks }) => {
     })
 
     const [show, setShow] = useState(false);
-    const navigate = useNavigate()
     const handleClose = () => {
         setShow(false);
         setBookDetails({

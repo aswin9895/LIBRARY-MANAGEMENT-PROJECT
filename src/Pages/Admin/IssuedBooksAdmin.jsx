@@ -12,7 +12,6 @@ const IssuedBooks = () => {
   const [issuedBooks, setIssuedBooks] = useState([])
 
   const navigate = useNavigate()
-  // console.log(issuedBooks);
 
  // role validation
  useEffect(() => {
@@ -47,7 +46,6 @@ const IssuedBooks = () => {
     } else {
       alert("Please Login Token is Missing!!!")
     }
-
   }
 
   // fine calculation function 
@@ -59,7 +57,6 @@ const IssuedBooks = () => {
     const diffTime = today - returnDateObj;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays > 0 ? diffDays * fine : 0;
-
   }
 
   // removeissuedbooks
@@ -158,7 +155,6 @@ const IssuedBooks = () => {
             <div className='fs-5 fw-bolder text-danger text-center mt-5 pt-5'>No Issued Books!!!</div>
           }
         </div>
-
       </div>
       <Footer />
     </div>

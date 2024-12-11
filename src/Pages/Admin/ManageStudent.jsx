@@ -9,11 +9,10 @@ import { newUserRegisterResponseContext } from '../../ContextAPI/ResponseAPI'
 const ManageStudent = () => {
 
   const { newUserRegisterResponse, setNewUserRegisterResponse } = useContext(newUserRegisterResponseContext)
-
   const [studentDetails, setStudentDetails] = useState([])
-  console.log(studentDetails);
 
   const navigate = useNavigate()
+
   // role validation
   useEffect(() => {
     const logged = JSON.parse(sessionStorage.getItem("users"))
@@ -21,6 +20,8 @@ const ManageStudent = () => {
       navigate('/*')
     }
   }, [])
+
+  // calling get all students 
   useEffect(() => {
     getAllStudents()
   }, [newUserRegisterResponse])
@@ -51,9 +52,7 @@ const ManageStudent = () => {
         "Authorization": `Bearer ${token}`
       }
       const admin = JSON.parse(sessionStorage.getItem("users"))
-      // console.log(token,admin);
       const isAdmin = admin.role == "admin"
-      // console.log(isAdmin);
       try {
         if (isAdmin == true) {
           const removeStudent = await deleteUserAPI(id, reqHeader)
@@ -64,7 +63,6 @@ const ManageStudent = () => {
           alert("You are not allowed Here!!!")
         }
       } catch (error) {
-
       }
     }
   }
@@ -91,7 +89,6 @@ const ManageStudent = () => {
                     <th className='p-3'>...</th>
                   </tr>
                 </thead>
-
                 <tbody >
                   {studentDetails?.length > 0 &&
                     studentDetails?.map((students, index) => (

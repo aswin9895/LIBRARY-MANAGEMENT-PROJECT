@@ -12,19 +12,33 @@ import ManageStudent from './Pages/Admin/ManageStudent'
 import RecommendedBooks from './Pages/Admin/RecommendedBooks'
 import AddBook from './Pages/Admin/AddBook'
 import Pnf from './Pages/Pnf'
-import { tokenAuthContext } from './ContextAPI/AuthContet'
+import { adminAuthContext, tokenAuthContext, userAuthContext } from './ContextAPI/AuthContet'
 import { useContext, useEffect } from 'react'
 
 function App() {
 
   const { isAuthorised, setIsAuthorised } = useContext(tokenAuthContext)
+  const { isAdmin, setisAdmin } = useContext(adminAuthContext)
+  const { isUser, setisUser } = useContext(userAuthContext)
+
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
       setIsAuthorised(true)
+      const logged = JSON.parse(sessionStorage.getItem("users"))
+      if (logged.role == "admin") {
+        setisAdmin(true)
+      } else {
+        setisAdmin(false)
+      }
+      if (logged.role == "student") {
+        setisUser(true)
+      } else {
+        setisUser(false)
+      }
     } else {
       setIsAuthorised(false)
     }
-  }, [isAuthorised])
+  }, [isAuthorised, isAdmin, isUser])
 
   return (
     <>
@@ -32,22 +46,22 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<Auth />} />
         <Route path='/register' element={<Auth insideRegister={true} />} />
-       {isAuthorised &&
-        <>
-          <Route path='/allbooks' element={<AllBooks />} />
-          <Route path='/allbooksadmin' element={<AllBooks insideAdmin={true}/>} />
-          <Route path='/recommendbooks' element={<RecommendBooks />} />
-          <Route path='/issuedbooks' element={<IssuedBooks />} />
-          <Route path='/updateprofile' element={<UpdateProfile />} />
-          <Route path='/requestedbooks' element={<Requestedbooks />} />
-          <Route path='/issuedbooksbyadmin' element={<IssuedBooksAdmin />} />
-          <Route path='/managestudent' element={<ManageStudent />} />
-          <Route path='/recommendedbooks' element={<RecommendedBooks />} />
-          <Route path='/addbook' element={<AddBook />} />
-        </>
+        {isAuthorised &&
+          <>
+            {isUser && <Route path='/allbooks' element={<AllBooks />} />}
+            {isAdmin && <Route path='/allbooksadmin' element={<AllBooks insideAdmin={true} />} />}
+            <Route path='/recommendbooks' element={<RecommendBooks />} />
+            <Route path='/issuedbooks' element={<IssuedBooks />} />
+            <Route path='/updateprofile' element={<UpdateProfile />} />
+            <Route path='/requestedbooks' element={<Requestedbooks />} />
+            <Route path='/issuedbooksbyadmin' element={<IssuedBooksAdmin />} />
+            <Route path='/managestudent' element={<ManageStudent />} />
+            <Route path='/recommendedbooks' element={<RecommendedBooks />} />
+            <Route path='/addbook' element={<AddBook />} />
+          </>
         }
-        <Route path='/allbooksguest' element={<AllBooks insideguest={true}/>} />
-        <Route path='/*' element={<Pnf/>} />
+        <Route path='/allbooksguest' element={<AllBooks insideguest={true} />} />
+        <Route path='/*' element={<Pnf />} />
       </Routes>
     </>
   )

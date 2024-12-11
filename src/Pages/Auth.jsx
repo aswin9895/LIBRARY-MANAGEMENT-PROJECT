@@ -4,9 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
 import { loginUserAPI, registerUserAPI } from '../Services/allAPI'
 import { newUserRegisterResponseContext } from '../ContextAPI/ResponseAPI'
-import { tokenAuthContext } from '../ContextAPI/AuthContet'
+import { adminAuthContext, tokenAuthContext, userAuthContext } from '../ContextAPI/AuthContet'
 
 const Auth = ({ insideRegister }) => {
+  const { isUser, setisUser } = useContext(userAuthContext)
   const { isAuthorised, setIsAuthorised } = useContext(tokenAuthContext)
   const { newUserRegisterResponse, setNewUserRegisterResponse } = useContext(newUserRegisterResponseContext)
 
@@ -30,10 +31,10 @@ const Auth = ({ insideRegister }) => {
     }
   }, [userDetails.email, userDetails.phn])
 
-useEffect(()=>{
-  sessionStorage.clear()
-  setIsAuthorised(false)
-},[])
+  useEffect(() => {
+    sessionStorage.clear()
+    setIsAuthorised(false)
+  }, [])
 
   // registeration function
   const handleRegister = async (e) => {
@@ -85,9 +86,11 @@ useEffect(()=>{
         setIsAuthorised(true)
         // console.log(loginedRole);
         if (loginedRole == "student") {
+          setisUser(true)
           navigate('/allbooks')
         } else {
           if (loginedRole == "admin") {
+            setisAdmin(true)
             navigate('/allbooksadmin')
           }
         }

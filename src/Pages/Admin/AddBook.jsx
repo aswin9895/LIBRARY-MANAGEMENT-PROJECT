@@ -12,8 +12,8 @@ const AddBook = () => {
     const [bookDetails, setBookDetails] = useState({
         title: "", author: "", publisher: "", copies: "", bookPic: ""
     })
-    console.log(bookDetails);
     const [copyStatus, setCopyStatus] = useState(false)
+
     const navigate = useNavigate()
 
     // role validation
@@ -24,6 +24,7 @@ const AddBook = () => {
             navigate('/*')
         }
     }, [])
+
     // bookcopies validation
     useEffect(() => {
         if (bookDetails.copies) {
@@ -31,8 +32,8 @@ const AddBook = () => {
         }
     }, [bookDetails.copies])
 
+    // bookpic and validations
     useEffect(() => {
-        // bookDetails and validations
         if (bookDetails.bookPic.type == "image/png" || bookDetails.bookPic.type == "image/jpg" || bookDetails.bookPic.type == "image/jpeg") {
             setImageFileStatus(true)
             setPreview(URL.createObjectURL(bookDetails.bookPic))
@@ -50,7 +51,6 @@ const AddBook = () => {
         e.preventDefault()
         const { title, author, publisher, copies, bookPic } = bookDetails
         if (title && author && publisher && copies && bookPic) {
-            // alert("api call")
             const reqBody = new FormData()
             reqBody.append("title", title)
             reqBody.append("author", author)

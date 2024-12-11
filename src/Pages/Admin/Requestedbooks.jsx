@@ -157,7 +157,6 @@ const Requestedbooks = () => {
         <h1 style={{ backgroundColor: "#3D3D4A", border: "none", borderRadius: "10px" }} className='container text-center d-flex justify-content-center text-light py-1 fw-bolder w-75'>
           STUDENT REQUESTED BOOKS
         </h1>
-
         <div className='mt-5 container-fluid'>
           {requestedBooks?.length > 0 ?
             <div className={mystyle.tableresponsive}>
@@ -193,9 +192,7 @@ const Requestedbooks = () => {
                         <td className='p-3'>{book?.studentName}</td>
                         <td className='p-3'>{book?.studentBranch}</td>
                         <td className='p-3'>
-
                           <button onClick={() => handleShow(book?._id)} style={{ border: "solid", borderWidth: "4px" }} className='px-2 py-1 rounded text-center text-dark bg-success'><i class="fa-solid fa-check"></i></button>
-
                           <Modal centered size='md' show={show} onHide={handleClose} backdrop="static" keyboard={false}>
                             <Modal.Body>
                               <FloatingLabel controlId="floatingInput" label="Return Date" className="mb-3 mt-3">
@@ -209,7 +206,6 @@ const Requestedbooks = () => {
                               <Button onClick={handleissuebook} variant="primary">Accept</Button>
                             </Modal.Footer>
                           </Modal>
-
                           <button onClick={() => rejectrequestBook(book?._id)} style={{ border: "solid", borderWidth: "4px" }} className='px-2 ms-2 py-1 rounded text-center text-dark bg-danger'><i class="fa-solid fa-x"></i></button>
                         </td>
                       </tr>

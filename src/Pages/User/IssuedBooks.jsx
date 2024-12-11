@@ -12,19 +12,22 @@ const IssuedBooks = () => {
   const [loggedIn, setloggedId] = useState("")
 
   const navigate = useNavigate()
+
+  // role validation
   useEffect(() => {
     const logged = JSON.parse(sessionStorage.getItem("users"))
     setloggedId(logged._id)
-
     if (logged.role != "student") {
       navigate('/*')
     }
   }, [])
 
+  // calling getissuedbooks
   useEffect(() => {
     getIssuedBooks()
   }, [loggedIn])
 
+  // getissuedbook functiom 
   const getIssuedBooks = async () => {
     const token = sessionStorage.getItem("token")
     if (token) {
@@ -40,8 +43,8 @@ const IssuedBooks = () => {
     }
   }
 
-   // fine calculation function 
-   const fineCalculation = (returnDate) => {
+  // fine calculation function 
+  const fineCalculation = (returnDate) => {
     const fine = 3
     const today = new Date()
     const returnDateObj = new Date(returnDate)
@@ -49,7 +52,6 @@ const IssuedBooks = () => {
     const diffTime = today - returnDateObj;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays > 0 ? diffDays * fine : 0;
-
   }
 
   return (
@@ -60,49 +62,49 @@ const IssuedBooks = () => {
           MY ISSUED BOOKS
         </h1>
         <div className='mt-5 container-fluid'>
-          {issuedBooks?.length>0?
+          {issuedBooks?.length > 0 ?
             <div className={mystyle.tableresponsive}>
-            <table className='table bg-light'>
-              <thead style={{ fontSize: "18px" }} className='text-dark fw-bolder border shadow'>
-                <tr>
-                  <th className='p-3'>Sl.No</th>
-                  <th className='p-3'>Title</th>
-                  <th className='p-3'>Author</th>
-                  <th className='p-3'>Publisher</th>
-                  <th className='p-3'>Image</th>
-                  <th className='p-3'>Issued Date</th>
-                  <th className='p-3'>Return Date</th>
-                  <th className='p-3'>Fine</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  issuedBooks?.map((books,index)=>(
-                    <tr key={index}>
-                  <td className='p-3'>{index+1}</td>
-                  <td className='p-3'>{books?.title}</td>
-                  <td className='p-3'>{books?.author}</td>
-                  <td className='p-3'>{books?.publisher}</td>
-                  <td className='p-3'>
-                    <img
-                      width={'100px'}
-                      height={'120px'}
-                      src={`${SERVER_URL}/uploads/${books?.bookPic}`}
-                      alt="no-image"
-                    />
-                  </td>
-                  <td className='p-3'>{books?.issuedDate}</td>
-                  <td className='p-3'>{books?.returnDate}</td>
-                  <td className='p-3'>₹<span>{fineCalculation(books?.returnDate)}</span></td>
-                </tr>
-                  ))
-                }
-              </tbody>
-            </table>
-          </div>
-        :
-        <div className="mt-5 pt-5 fw-bolder fs-5 text-danger text-center">No Books Issued!!!</div>  
-        }
+              <table className='table bg-light'>
+                <thead style={{ fontSize: "18px" }} className='text-dark fw-bolder border shadow'>
+                  <tr>
+                    <th className='p-3'>Sl.No</th>
+                    <th className='p-3'>Title</th>
+                    <th className='p-3'>Author</th>
+                    <th className='p-3'>Publisher</th>
+                    <th className='p-3'>Image</th>
+                    <th className='p-3'>Issued Date</th>
+                    <th className='p-3'>Return Date</th>
+                    <th className='p-3'>Fine</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    issuedBooks?.map((books, index) => (
+                      <tr key={index}>
+                        <td className='p-3'>{index + 1}</td>
+                        <td className='p-3'>{books?.title}</td>
+                        <td className='p-3'>{books?.author}</td>
+                        <td className='p-3'>{books?.publisher}</td>
+                        <td className='p-3'>
+                          <img
+                            width={'100px'}
+                            height={'120px'}
+                            src={`${SERVER_URL}/uploads/${books?.bookPic}`}
+                            alt="no-image"
+                          />
+                        </td>
+                        <td className='p-3'>{books?.issuedDate}</td>
+                        <td className='p-3'>{books?.returnDate}</td>
+                        <td className='p-3'>₹<span>{fineCalculation(books?.returnDate)}</span></td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
+            :
+            <div className="mt-5 pt-5 fw-bolder fs-5 text-danger text-center">No Books Issued!!!</div>
+          }
         </div>
       </div>
       <Footer />
