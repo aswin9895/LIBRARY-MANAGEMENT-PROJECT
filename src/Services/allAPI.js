@@ -120,3 +120,11 @@ export const removerecomendbookAPI = async (id, reqHeader) => {
 export const updateprofileAPI = async (id, reqBody, reqHeader) => {
     return await commonAPI("PUT", `${SERVER_URL}/updateProfile/${id}/update`, reqBody, reqHeader)
 }
+
+
+// updations ----------------
+
+// getStudentAPI
+export const getStudentAPI = async (field,value) => {
+    return await commonAPI("GET", `${SERVER_URL}/getallstudents?field=${field}&value=${value}`,{})
+}

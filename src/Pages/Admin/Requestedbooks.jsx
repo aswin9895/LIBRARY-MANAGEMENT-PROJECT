@@ -195,9 +195,7 @@ const Requestedbooks = () => {
                           <button onClick={() => handleShow(book?._id)} style={{ border: "solid", borderWidth: "4px" }} className='px-2 py-1 rounded text-center text-dark bg-success'><i class="fa-solid fa-check"></i></button>
                           <Modal centered size='md' show={show} onHide={handleClose} backdrop="static" keyboard={false}>
                             <Modal.Body>
-                              <FloatingLabel controlId="floatingInput" label="Return Date" className="mb-3 mt-3">
-                                <Form.Control onChange={e => setissuebook({ ...issuebook, returnDate: e.target.value })} type="date" placeholder="" />
-                              </FloatingLabel>
+                                <input onChange={e => setissuebook({ ...issuebook, returnDate: e.target.value })} className='mb-3 mt-3 p-2 rounded' placeholder="Return Date" type="date" min={currentdate}/>
                             </Modal.Body>
                             <Modal.Footer>
                               <Button variant="secondary" onClick={handleClose}>
